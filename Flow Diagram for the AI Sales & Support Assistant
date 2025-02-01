@@ -1,0 +1,49 @@
+# Re-creating the Flow Diagram for the AI Sales & Support Assistant after reset
+
+from PIL import Image, ImageDraw
+
+# Create a blank image for the flow diagram
+img_width = 1200
+img_height = 800
+img = Image.new("RGB", (img_width, img_height), "white")
+draw = ImageDraw.Draw(img)
+
+# Title for the flow diagram
+flow_title = "AI Sales & Support Assistant - Flow Diagram"
+draw.text((img_width // 4, 20), flow_title, fill="black")
+
+# Define flow components and their positions
+components = {
+    "User": (100, 150),
+    "AI Assistant": (450, 150),
+    "Backend API": (800, 150),
+    "CRM System": (450, 350),
+    "Support System": (800, 350)
+}
+
+# Draw components as rectangles with labels
+for name, (x, y) in components.items():
+    draw.rectangle([x, y, x + 250, y + 80], outline="black", width=2)
+    draw.text((x + 20, y + 30), name, fill="black")
+
+# Draw arrows to show data flow
+arrows = [
+    (components["User"], components["AI Assistant"]),
+    (components["AI Assistant"], components["Backend API"]),
+    (components["AI Assistant"], components["CRM System"]),
+    (components["AI Assistant"], components["Support System"])
+]
+
+for (start, end) in arrows:
+    start_x, start_y = start[0] + 250, start[1] + 40
+    end_x, end_y = end[0], end[1] + 40
+    draw.line([(start_x, start_y), (end_x, end_y)], fill="black", width=2)
+    # Adding arrowheads
+    draw.polygon([(end_x, end_y), (end_x - 10, end_y - 5), (end_x - 10, end_y + 5)], fill="black")
+
+# Save the flow diagram image
+flow_diagram_path = "/mnt/data/AI_Flow_Diagram.png"
+img.save(flow_diagram_path)
+
+# Provide the new download link
+flow_diagram_path
